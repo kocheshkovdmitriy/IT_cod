@@ -1,0 +1,53 @@
+.main-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #20B2AA;
+  background-image: url("../img/back.jpg");
+  background-size: 100% 100%;
+  background-position: left center;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: gray;
+    min-width: 100%;
+    height: 50px;
+    background-image: url("../img/header.jpg");
+    background-size: 100% 100%;
+    background-position: left center;
+    }
+
+.group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group1 {
+    display: flex;
+    align-items: center;
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    }
+
+.group a{
+    margin-right: 25px;
+    }
+
+.foto {
+    width: 50%;}
+
+.link_fio {
+    color: black;
+    }
+
+.size_form {
+    max-width: 30%;
+
+    }
