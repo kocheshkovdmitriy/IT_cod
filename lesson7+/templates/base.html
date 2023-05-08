@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <title>{% block title %} Заголовок страницы {% endblock%}</title>
+</head>
+<body>
+    <div class="main-content">
+        <nav class="menu">
+            <div class="group">
+                <img class="logo" src="{% static 'image/logo.png' %}" alt="Логотип">
+                <div class="group1">
+                    <a href=#>Главная</a>
+                    <a href=#>Список готовых тестов</a>
+                    <a href=#>Каталог заданий</a>
+                </div>
+            </div>
+            <div class="group">
+                <a href="">вход</a>
+            </div>
+        </nav>
+        <div>
+            {% block content%}
+                <h1>Тут будет содержание страницы</h1>
+            {% endblock%}
+        </div>
+    </div>
+</body>
+</html>
