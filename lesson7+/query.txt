@@ -1,0 +1,77 @@
+In: from users.models import Profile
+In: from edu.models import Task, Test, Section
+
+1. Список всех задач:
+In : Task.objects.all()
+Out : <QuerySet [<Task: Задание №:1, раздел сложение>, <Task: Задание №:2, раздел сложение>, <Task: Задание №:3, раздел сложение>, <Task: Задание №:4, раздел вычит
+ание>, <Task: Задание №:5, раздел вычитание>, <Task: Задание №:6, раздел умножение>, <Task: Задание №:7, раздел деление>, <Task: Задание №:8, раздел умножение>, <Task
+: Задание №:9, раздел сложение>]>
+
+2. Получить задачу №8:
+In: Task.objects.get(pk=8)
+Out: <Task: Задание №:8, раздел умножение>
+
+3. Получить список всех задач на сложение:
+In: Task.objects.filter(section_id=1)
+Out: <QuerySet [<Task: Задание №:1, раздел сложение>, <Task: Задание №:2, раздел сложение>, <Task: Задание №:3, раздел сложение>, <Task: Задание №:9, раздел сложе
+ние>]>
+
+4. Создание профиля ученика (по концепции создается при регистрации пользователя):
+In : Profile.objects.create(user=User.objects.create_user(username='Dima', password='aq123456', first_name='Dima', last_name='Dmitriev'),
+...: slug='dima', city='Москва', school='Лицей 1250', grade=11)
+Out: <Profile: Dima Dmitriev>
+
+5. Назначить тесты ученику:
+In [32]: profile = Profile.objects.filter(slug='test').first()
+In [33]: profile.tests.all()
+Out[33]: <QuerySet []>
+In [34]: profile.tests.set(Test.objects.all())
+In [35]: profile.tests.all()
+Out[35]: <QuerySet [<Test: Тема: тест на сложение, количесво задани 3>, <Test: Тема: тест на вычитание, количесво задани 3>]>
+
+6. Удалить тест у ученика
+In [35]: profile.tests.all()
+Out[35]: <QuerySet [<Test: Тема: тест на сложение, количесво задани 3>, <Test: Тема: тест на вычитание, количесво задани 3>]>
+In [36]: test = list(profile.tests.all())[-1]
+In [37]: profile.tests.remove(test)
+In [38]: profile.tests.all()
+Out[38]: <QuerySet [<Test: Тема: тест на сложение, количесво задани 3>]>
+
+7. Добавить ученику тест к имеющимся
+In [39]: profile.tests.add(test)
+In [40]: profile.tests.all()
+Out[40]: <QuerySet [<Test: Тема: тест на сложение, количесво задани 3>, <Test: Тема: тест на вычитание, количесво задани 3>]>
+
+8. Получить тесты ученика 2
+In: Profile.objects.get(pk=2).tests.all()
+Out: <QuerySet [<Test: Тема: тест на вычитание, количесво задани 3>]>
+
+9. Получить учеников без назначенных тестов:
+In: Profile.objects.filter(tests__isnull=True)
+Out: <QuerySet [<Profile: Ivan Ivanov>]>
+
+10. Получить учпеников только из обычных общеобразовательных школ (не понимаю почему icontains не ищет по маленьким буквам,
+возможно проблемма локальная, пока не разобрался):
+In [5]: Profile.objects.filter(school__icontains='СОШ')
+Out[5]: <QuerySet [<Profile: Petr Petrov>, <Profile: Sveta Svetova>, <Profile: Ivan Ivanov>]>
+
+9. Изменение школы у ученика
+In [42]: Profile.objects.filter(slug='test').first().school
+Out[42]: 'Лицей 1250'
+In [44]: Profile.objects.filter(slug='test').update(school='МБОУ СОШ')
+Out[44]: 1
+In [45]: Profile.objects.filter(slug='test').first().school
+Out[45]: 'МБОУ СОШ'
+
+
+10. Удаление ученика
+In [46]: Profile.objects.filter(slug='test').first()
+Out[46]: <Profile: Dima Dmitriev>
+In [47]: User.objects.filter(username='test').first().delete()
+Out[47]: (4, {'users.Profile_tests': 2, 'users.Profile': 1, 'auth.User': 1})
+In [48]: Profile.objects.filter(slug='test').first()
+In [49]: Profile.objects.filter(slug='test')
+Out[49]: <QuerySet []>
+
+
+
