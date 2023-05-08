@@ -55,7 +55,7 @@ Out: <QuerySet [<Profile: Ivan Ivanov>]>
 In [5]: Profile.objects.filter(school__icontains='СОШ')
 Out[5]: <QuerySet [<Profile: Petr Petrov>, <Profile: Sveta Svetova>, <Profile: Ivan Ivanov>]>
 
-9. Изменение школы у ученика
+11. Изменение школы у ученика
 In [42]: Profile.objects.filter(slug='test').first().school
 Out[42]: 'Лицей 1250'
 In [44]: Profile.objects.filter(slug='test').update(school='МБОУ СОШ')
@@ -64,7 +64,7 @@ In [45]: Profile.objects.filter(slug='test').first().school
 Out[45]: 'МБОУ СОШ'
 
 
-10. Удаление ученика
+12. Удаление ученика
 In [46]: Profile.objects.filter(slug='test').first()
 Out[46]: <Profile: Dima Dmitriev>
 In [47]: User.objects.filter(username='test').first().delete()
