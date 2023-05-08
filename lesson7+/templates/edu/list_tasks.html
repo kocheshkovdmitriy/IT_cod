@@ -3,5 +3,11 @@
 {% block title %} Заголовок страницы {% endblock%}
 
 {% block content%}
-    <h1>Тут будет список задач</h1>
+    {% if tasks %}
+        {% for task in tasks %}
+            <p><a href="{% url 'edu:detail_task' pk=task.pk %}">{{task}}</a></p>
+        {% endfor %}
+    {% else %}
+        список задач пуст
+    {% endif %}
 {% endblock%}

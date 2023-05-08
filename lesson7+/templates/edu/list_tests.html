@@ -3,5 +3,11 @@
 {% block title %} Заголовок страницы {% endblock%}
 
 {% block content%}
-    <h1>Тут будет список тестов</h1>
+    {% if tests %}
+        {% for test in tests %}
+            <p><a href="{% url 'edu:detail_test' pk=test.pk %}">{{test}}</a></p>
+        {% endfor %}
+    {% else %}
+        список тестов пуст
+    {% endif %}
 {% endblock%}
