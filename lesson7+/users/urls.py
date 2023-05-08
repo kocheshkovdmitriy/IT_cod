@@ -6,5 +6,5 @@ app_name = 'users'
 
 
 urlpatterns = [
-    path('profile/<int:user_pk>', profile, name='profile'),
+    path('profile/<slug:slug>', profile, name='profile'),
 ]

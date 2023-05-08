@@ -18,8 +18,18 @@ class TestDetail(DetailView):
     template_name = 'edu/detail_test.html'
     context_object_name = 'test'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['object'].title
+        return context
+
 
 class TaskDetail(DetailView):
     model = Task
     template_name = 'edu/detail_task.html'
     context_object_name = 'task'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['object'].__str__()
+        return context
