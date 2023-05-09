@@ -19,7 +19,11 @@
                 </div>
             </div>
             <div class="group">
-                <a href="">вход</a>
+                {% if request.user.is_authenticated %}
+                    <p><a href="{% url 'users:profile' slug=request.user.username %}">{{ request.user.first_name }}</a>  | <a href="{% url 'users:logout' %}">выйти</a></p>
+                {% else %}
+                    <p><a href="{% url 'users:register' %}">зарегистрироваться</a> | <a href="{% url 'users:login' %}">войти</a> </p>
+                {% endif %}
             </div>
         </nav>
         <div>
