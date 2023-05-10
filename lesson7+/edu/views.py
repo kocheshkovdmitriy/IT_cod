@@ -2,16 +2,30 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from edu.models import Test, Task, Section
 
+class TitleMixin():
+    title = None
 
-class TestList(ListView):
+    def get_title(self):
+        return self.title
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.get_title()
+        return context
+
+
+
+class TestList(TitleMixin, ListView):
     model = Test
     template_name = 'edu/list_tests.html'
     context_object_name = 'tests'
+    title = 'Каталог тестов'
 
-class TaskList(ListView):
+class TaskList(TitleMixin, ListView):
     model = Task
     template_name = 'edu/list_tasks.html'
     context_object_name = 'tasks'
+    title = 'Каталог заданий'
 
 class TestDetail(DetailView):
     model = Test
