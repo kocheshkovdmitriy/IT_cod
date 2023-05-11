@@ -14,7 +14,6 @@ class TitleMixin():
         return context
 
 
-
 class TestList(TitleMixin, ListView):
     model = Test
     template_name = 'edu/list_tests.html'

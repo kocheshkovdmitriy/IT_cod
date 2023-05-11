@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} {{title}} {% endblock%}
+
+{% block content%}
+    {% if new %}
+        <div>
+            <p>{{new.title}}</p>
+            <p>{{new.description}}</p>
+        </div>
+    {% else %}
+        <div>
+            <p>Что то пошло не так, вернитесь к новостям</p>
+        </div>
+    {% endif %}
+
+    <div>
+        <a href="{% url 'core:list_news' %}">Назад к новостям</a>
+    </div>
+{% endblock%}
