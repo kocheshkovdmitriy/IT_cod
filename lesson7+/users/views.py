@@ -17,7 +17,7 @@ def profile(request, slug):
 
 def logout_view(request):
     logout(request)
-    return redirect('/')
+    return redirect(request.GET.get('lastpath', '/'))
 
 class LoginView(View):
     def post(self, request):
@@ -29,7 +29,7 @@ class LoginView(View):
             if user:
                 if user.is_active:
                     login(request, user)
-                    return redirect('/')
+                    return redirect(request.POST['lastpath'])
                 else:
                     form.add_error('__all__', 'Учетная запись не активна.')
             else:
@@ -51,7 +51,7 @@ def register_view(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('/')
+            return redirect(request.POST['lastpath'])
         else:
             context = {'form': form}
             return render(request, 'core/list_news.html', context=context)
