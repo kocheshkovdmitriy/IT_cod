@@ -51,6 +51,11 @@
 }
 
 .form_auth_block{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    z-index:998;
     display: None;
     width: 500px;
     min-height: 500px;

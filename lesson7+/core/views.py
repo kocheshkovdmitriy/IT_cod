@@ -4,6 +4,10 @@ from django.views.generic import ListView, DetailView
 from core.models import New, Commit
 
 
+def about(request):
+    return render(request=request, template_name='core/about.html')
+
+
 class TitleMixin():
     title = None
 

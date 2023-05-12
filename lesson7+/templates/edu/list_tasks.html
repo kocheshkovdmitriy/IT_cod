@@ -3,11 +3,10 @@
 {% block title %} {{title}} {% endblock%}
 
 {% block content%}
-    {% if tasks %}
-        {% for task in tasks %}
-            <p><a href="{% url 'edu:detail_task' pk=task.pk %}">{{task}}</a></p>
-        {% endfor %}
-    {% else %}
-        список задач пуст
-    {% endif %}
+    {% for task in tasks %}
+        <p><a href="{% url 'edu:detail_task' pk=task.pk %}">{{task}}</a></p>
+    {% empty %}
+        <p>список задач пуст</p>
+    {% endfor %}
+    <a href="{% url 'edu:task_create' %}">Добавить задачу</a>
 {% endblock%}
