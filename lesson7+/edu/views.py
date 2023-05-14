@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from edu.models import Test, Task, Section
+from edu import filters
 
 class TitleMixin():
     title = None
@@ -21,12 +22,34 @@ class TestList(TitleMixin, ListView):
     context_object_name = 'tests'
     title = 'Каталог тестов'
 
+    def get_filters(self):
+        return filters.TestFilter(self.request.GET)
+
+    def get_queryset(self):
+        return self.get_filters().qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filters'] = self.get_filters()
+        return context
+
 
 class TaskList(TitleMixin, ListView):
     model = Task
     template_name = 'edu/list_tasks.html'
     context_object_name = 'tasks'
     title = 'Каталог заданий'
+
+    def get_filters(self):
+        return filters.TaskFilter(self.request.GET)
+    
+    def get_queryset(self):
+        return self.get_filters().qs
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filters'] = self.get_filters()
+        return context
 
 
 class TestDetail(DetailView):

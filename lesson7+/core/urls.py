@@ -1,11 +1,14 @@
 from django.urls import path
-from core.views import NewList, NewDetail, about
+from core import views
 
 app_name = 'core'
 
 
 urlpatterns = [
-    path('', NewList.as_view(), name='list_news'),
-    path('new/<int:pk>', NewDetail.as_view(), name='detail_new'),
-    path('about/', about, name='about'),
+    path('', views.NewList.as_view(), name='list_news'),
+    path('new/<int:pk>', views.NewDetail.as_view(), name='detail_new'),
+    path('about/', views.about, name='about'),
+    path('new_create/', views.NewCreate.as_view(), name='new_create'),
+    path('new_update/<int:pk>', views.NewUpdate.as_view(), name='new_update'),
+    path('new_delete/<int:pk>', views.NewDelete.as_view(), name='new_delete'),
 ]

@@ -3,11 +3,12 @@
 {% block title %} {{title}} {% endblock%}
 
 {% block content%}
-    {% if news %}
-        {% for new in news %}
-            <p><a href="{% url 'core:detail_new' pk=new.pk %}">{{new}}</a></p>
-        {% endfor %}
-    {% else %}
-        пока новостей нет
-    {% endif %}
+    {% for new in news %}
+        <p><a href="{% url 'core:detail_new' pk=new.pk %}">{{new}}</a></p>
+        <p>{{new.description}}</p>
+        <p>Опубликована: {{new.time_create}}</p>
+    {% empty %}
+        <p>пока новостей нет</p>
+    {% endfor %}
+    <a href="{% url 'core:new_create' %}">Добавить новость</a>
 {% endblock%}

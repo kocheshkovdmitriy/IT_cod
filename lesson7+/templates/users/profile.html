@@ -15,4 +15,5 @@
             {% endfor %}
         </ol>
     </div>
+    <a href="{% url 'users:profile_update' slug=profile.slug %}">Редактировать профиль</a>
 {% endblock%}

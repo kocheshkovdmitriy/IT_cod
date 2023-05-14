@@ -2,7 +2,7 @@
 
 {% block title %} {{title}} {% endblock%}
 
-{% block content%}
+{% block content %}
     {% if tests %}
         {% for test in tests %}
             <p><a href="{% url 'edu:detail_test' pk=test.pk %}">{{test}}</a></p>
@@ -10,4 +10,12 @@
     {% else %}
         список тестов пуст
     {% endif %}
-{% endblock%}
+{% endblock %}
+
+{% block filters %}
+<form action="{% url 'edu:list_tests' %}" method="GET">
+    {% csrf_token %}
+    {{ filters.form.as_p }}
+    <button type="submit">Найти</button>
+</form>
+{% endblock %}

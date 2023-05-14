@@ -1,5 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import UpdateView
 from users.models import Profile
 from users.forms import RegisterForm, AuthUser
 
@@ -34,7 +36,7 @@ class LoginView(View):
                     form.add_error('__all__', 'Учетная запись не активна.')
             else:
                 form.add_error('__all__', 'Неверно введены имя пользователя или пароль.')
-        context = {'form': form}
+        context = {'form_auth': form}
         return render(request, 'core/list_news.html', context=context)
 
 def register_view(request):
@@ -53,9 +55,23 @@ def register_view(request):
             login(request, user)
             return redirect(request.POST['lastpath'])
         else:
-            context = {'form': form}
+            context = {'form_reg': form}
             return render(request, 'core/list_news.html', context=context)
     else:
         form = RegisterForm()
-        context = {'form': form}
+        context = {'form_reg': form}
         return render(request, 'core/list_news.html', context=context)
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    template_name = 'users/profile_update.html'
+    fields = ('city', 'school', 'grade', 'tests',)
+    context_object_name = 'profile'
+
+    def get_success_url(self):
+        return reverse_lazy("users:profile", kwargs={'slug': self.object.slug})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Редактирование профиля'
+        return context
