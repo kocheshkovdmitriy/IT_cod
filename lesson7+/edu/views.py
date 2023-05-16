@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from edu.models import Test, Task, Section
+from edu import models
 from edu import filters
+
 
 class TitleMixin():
     title = None
@@ -17,7 +18,7 @@ class TitleMixin():
 
 
 class TestList(TitleMixin, ListView):
-    model = Test
+    model = models.Test
     template_name = 'edu/list_tests.html'
     context_object_name = 'tests'
     title = 'Каталог тестов'
@@ -35,7 +36,7 @@ class TestList(TitleMixin, ListView):
 
 
 class TaskList(TitleMixin, ListView):
-    model = Task
+    model = models.Task
     template_name = 'edu/list_tasks.html'
     context_object_name = 'tasks'
     title = 'Каталог заданий'
@@ -53,7 +54,7 @@ class TaskList(TitleMixin, ListView):
 
 
 class TestDetail(DetailView):
-    model = Test
+    model = models.Test
     template_name = 'edu/detail_test.html'
     context_object_name = 'test'
 
@@ -64,7 +65,7 @@ class TestDetail(DetailView):
 
 
 class TaskDetail(DetailView):
-    model = Task
+    model = models.Task
     template_name = 'edu/detail_task.html'
     context_object_name = 'task'
 
@@ -74,8 +75,8 @@ class TaskDetail(DetailView):
         return context
 
 
-class TaskCreate(TitleMixin, CreateView):
-    model = Task
+class TaskCreate(CreateView):
+    model = models.Task
     template_name = 'edu/task_create.html'
     fields = '__all__'
     title = 'Создание задачи'
@@ -83,7 +84,7 @@ class TaskCreate(TitleMixin, CreateView):
 
 
 class TaskUpdate(TitleMixin, UpdateView):
-    model = Task
+    model = models.Task
     template_name = 'edu/task_update.html'
     fields = '__all__'
     title = 'Изменение задачи'
@@ -93,7 +94,7 @@ class TaskUpdate(TitleMixin, UpdateView):
 
 
 class TaskDelete(TitleMixin, DeleteView):
-    model = Task
+    model = models.Task
     template_name = 'edu/task_delete.html'
     title = 'Удаление задачи'
     success_url = reverse_lazy("edu:list_tasks")

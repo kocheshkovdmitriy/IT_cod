@@ -19,9 +19,14 @@ def profile(request, slug):
 
 def logout_view(request):
     logout(request)
-    return redirect(request.GET.get('lastpath', '/'))
+    return redirect('/')
 
 class LoginView(View):
+    def get(self, request):
+        form = AuthUser()
+        context = {'form': form}
+        return render(request, 'users/auth_user.html', context=context)
+
     def post(self, request):
         form = AuthUser(request.POST)
         if form.is_valid():
@@ -31,13 +36,13 @@ class LoginView(View):
             if user:
                 if user.is_active:
                     login(request, user)
-                    return redirect(request.POST['lastpath'])
+                    return redirect('/')
                 else:
                     form.add_error('__all__', 'Учетная запись не активна.')
             else:
                 form.add_error('__all__', 'Неверно введены имя пользователя или пароль.')
-        context = {'form_auth': form}
-        return render(request, 'core/list_news.html', context=context)
+        context = {'form': form, 'title': 'авторизация пользователя'}
+        return render(request, 'users/auth_user.html', context=context)
 
 def register_view(request):
     if request.method == 'POST':
@@ -53,14 +58,14 @@ def register_view(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect(request.POST['lastpath'])
+            return redirect('/')
         else:
-            context = {'form_reg': form}
-            return render(request, 'core/list_news.html', context=context)
+            context = {'form': form, 'title': 'регистранция пользователя'}
+            return render(request, 'users/reg_user.html', context=context)
     else:
         form = RegisterForm()
-        context = {'form_reg': form}
-        return render(request, 'core/list_news.html', context=context)
+        context = {'form': form, 'title': 'регистрация пользователя'}
+        return render(request, 'users/reg_user.html', context=context)
 
 class ProfileUpdate(UpdateView):
     model = Profile
