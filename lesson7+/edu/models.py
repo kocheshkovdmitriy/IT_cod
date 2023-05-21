@@ -1,5 +1,8 @@
 from django.db import models
 
+
+
+
 class Task(models.Model):
     task = models.CharField(max_length=1000, verbose_name='Условие')
     answer = models.CharField(max_length=100, verbose_name='Правильный ответ')
@@ -40,3 +43,16 @@ class Section(models.Model):
     class Meta:
         verbose_name = 'Раздел'
         verbose_name_plural = 'Разделы'
+
+class Answer(models.Model):
+    answer = models.CharField(max_length=100, verbose_name='Ответ')
+    task = models.ForeignKey('Task', on_delete=models.CASCADE, verbose_name='Задача', related_name='answers')
+    test = models.ForeignKey('Test', on_delete=models.CASCADE, verbose_name='Тест', related_name='answers', blank=True, null=True)
+    status = models.BooleanField(verbose_name='статус', default=False)
+
+    def __str__(self):
+        return 'Задание №{num}: ваш ответ {answer}. Статус {status}'.format(
+            answer=self.answer,
+            num=self.task.pk,
+            status = 'решено' if self.status else 'нерешено'
+        )

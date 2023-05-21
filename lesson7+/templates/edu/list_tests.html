@@ -10,6 +10,9 @@
     {% else %}
         список тестов пуст
     {% endif %}
+    {% if request.user.is_superuser %}
+        <a href="#">Добавить тест</a>
+    {% endif %}
 {% endblock %}
 
 {% block filters %}

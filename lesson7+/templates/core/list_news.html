@@ -10,5 +10,9 @@
     {% empty %}
         <p>пока новостей нет</p>
     {% endfor %}
-    <a href="{% url 'core:new_create' %}">Добавить новость</a>
+
+    {% if request.user.is_superuser %}
+        <a href="{% url 'core:new_create' %}">Добавить новость</a>
+    {% endif %}
+
 {% endblock%}

@@ -16,8 +16,10 @@
     {% endif %}
 
     <div>
-        <a href="{% url 'edu:task_update' pk=task.pk%}">Обновить задачу</a>
-        <a href="{% url 'edu:task_delete' pk=task.pk%}">Удалить задачу</a>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'edu:task_update' pk=task.pk%}">Обновить задачу</a>
+            <a href="{% url 'edu:task_delete' pk=task.pk%}">Удалить задачу</a>
+        {% endif %}
         <a href="{% url 'edu:list_tasks' %}">Назад к катологу заданий</a>
     </div>
 {% endblock%}

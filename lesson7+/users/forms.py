@@ -13,9 +13,9 @@ class RegisterForm(UserCreationForm):
     first_name = forms.CharField(max_length=20, required=False, label='Имя')
     last_name = forms.CharField(max_length=20, required=False, label='Фамилия')
     slug = forms.CharField(max_length=20, required=False, help_text='только латинские буквы и цифры')
-    city = forms.CharField(required=False, help_text='Город')
-    school = forms.CharField(required=False, help_text='Школа')
-    grade = forms.IntegerField(required=False, help_text='Только число, без букв')
+    city = forms.CharField(required=False, label='Город')
+    school = forms.CharField(required=False, label='Школа')
+    grade = forms.IntegerField(required=False, label='Класс', help_text='Только число, без букв')
     slug.widget = slug.hidden_widget()
 
     def clean_username(self):

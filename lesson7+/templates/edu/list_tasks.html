@@ -8,7 +8,9 @@
     {% empty %}
         <p>список задач пуст</p>
     {% endfor %}
-    <a href="{% url 'edu:task_create' %}">Добавить задачу</a>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'edu:task_create' %}">Добавить задачу</a>
+    {% endif %}
 {% endblock%}
 
 {% block filters %}

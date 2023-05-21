@@ -16,6 +16,10 @@
         </div>
     {% endif %}
     <div>
+        {% if request.user.is_superuser %}
+            <a href="#">Обновить тест</a>
+            <a href="#">Удалить тест</a>
+        {% endif %}
         <a href="{% url 'edu:list_tests' %}">Назад к списку тестов</a>
     </div>
 {% endblock%}
