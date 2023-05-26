@@ -11,7 +11,7 @@
         список тестов пуст
     {% endif %}
     {% if request.user.is_superuser %}
-        <a href="#">Добавить тест</a>
+        <a href="{% url 'edu:test_create' %}">Добавить тест</a>
     {% endif %}
 {% endblock %}
 

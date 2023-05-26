@@ -4,7 +4,11 @@
 
 {% block content%}
     {% for task in tasks %}
-        <p><a href="{% url 'edu:detail_task' pk=task.pk %}">{{task}}</a></p>
+        <div>
+            <p><a href="{% url 'edu:detail_task' pk=task.pk %}">{{task}}</a></p>
+            <p>{{task.task}}</p>
+        </div>
+
     {% empty %}
         <p>список задач пуст</p>
     {% endfor %}

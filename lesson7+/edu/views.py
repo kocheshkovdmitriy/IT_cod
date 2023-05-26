@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from edu import models
 from edu import filters
+from edu import forms
 
 
 class TitleMixin():
@@ -98,3 +99,43 @@ class TaskDelete(TitleMixin, DeleteView):
     template_name = 'edu/task_delete.html'
     title = 'Удаление задачи'
     success_url = reverse_lazy("edu:list_tasks")
+
+
+class TestCreateView(View):
+    def post(self, request):
+        if request.POST.get('create_test'):
+            list_task_id = dict(request.POST).get('list_task_id')
+            if list_task_id:
+                new_test = models.Test.objects.create(title=request.POST["title"])
+                new_test.tasks_list.set(models.Task.objects.filter(pk__in=list_task_id))
+                print(new_test)
+                return redirect(reverse('edu:detail_test', kwargs={'pk': new_test.pk}))
+        context = self.get_context_data(request)
+        if request.POST.get('create_task'):
+            new_task = models.Task.objects.create(
+                task=request.POST.get('task'),
+                answer=request.POST.get('answer'),
+                section_id=int(request.POST.get('section'))
+            )
+            context['list_task_id'].append(str(new_task.pk))
+        if request.POST.get('add_task'):
+            form = forms.TaskForm()
+            context['form_task'] = form
+        return render(request, 'edu/test_create.html', context=context)
+
+    def get(self, request):
+        context = self.get_context_data(request)
+        return render(request, 'edu/test_create.html', context=context)
+
+    def get_filters(self):
+        return filters.TaskFilter(self.request.GET)
+
+    def get_queryset(self):
+        return self.get_filters().qs
+
+    def get_context_data(self, request):
+        context = {'tasks': self.get_queryset(),
+                   'filters': self.get_filters(),
+                   'title': 'Создание теста',
+                   'list_task_id': dict(request.POST).get('list_task_id', [])}
+        return context

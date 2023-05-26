@@ -26,7 +26,7 @@
                     <p><a href="{% url 'users:profile' slug=request.user.username %}">{{ request.user.first_name }}</a> | <a href="{% url 'users:logout' %}">выйти</a></p>
                 {% else %}
                     <p><a href="{% url 'users:register' %}">зарегистрироваться</a> | <a href="{% url 'users:login' %}">войти</a></p>
-                    <!-- <p><button type="button" onclick="openForm('myForm1')">Регистрация</button> | <button type="button" onclick="openForm('myForm')">Войти</button> </p> -->
+                    <!--<p><button type="button" onclick="openForm('myForm1')">Регистрация</button> | <button type="button" onclick="openForm('myForm')">Войти</button> </p>-->
                 {% endif %}
             </div>
         </nav>
@@ -42,8 +42,8 @@
             </div>
         </div>
 
-        <!-- всплывающие формы авторизации и регистрации, пока не придумал как прикрутить
-       <div class="form_auth_block" id="myForm" style="background-image: url({% static 'image/logo.png'%})";>
+
+       <!--<div class="form_auth_block" id="myForm" style="background-image: url({% static 'image/logo.png'%})";>
           <div class="form_auth_block_content">
             <p class="form_auth_block_head_text">Авторизация</p>
             <form class="form_auth_style" action="{% url 'users:login' %}" method="post">
@@ -87,8 +87,8 @@
             </form>
           </div>
         </div>
-       <script src="{% static 'js/auth_form.js' %}"></script>
-        -->
+       <script src="{% static 'js/auth_form.js' %}"></script>-->
+
 
     </div>
 
